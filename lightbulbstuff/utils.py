@@ -14,24 +14,6 @@ import hikari
 import lightbulb
 from bot import SkyeBot
 
-def configure_logging() -> None:
-    log = logging.getLogger("root")
-    log.setLevel(logging.INFO)
-
-    rfh = RotatingFileHandler(
-        "./data/logs/main.log",
-        maxBytes=521288,  # 512KB
-        encoding="utf-8",
-        backupCount=10,
-    )
-
-    ff = logging.Formatter(
-        f"[%(asctime)s] %(levelname)s ||| %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
-
-    rfh.setFormatter(ff)
-    log.addHandler(rfh)
 
 class Plugin(lightbulb.Plugin):
     @property

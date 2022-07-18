@@ -45,3 +45,6 @@ async def foo_autocomplete(
 
 def load(bot: SkyeBot) -> None:
     bot.add_plugin(ma)
+
+def unload(bot: SkyeBot):
+    bot.remove_plugin(ma)

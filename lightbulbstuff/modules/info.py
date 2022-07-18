@@ -25,8 +25,16 @@ async def userinfo(ctx: utils.SlashContext, user: hikari.Member) -> None:
 
     await ctx.respond(embed)
     
+@hm.command()
+@lightbulb.command("ping", "Gets The Bots Ping")
+@lightbulb.implements(lightbulb.SlashCommand)
+async def ping(ctx: utils.SlashContext):
+    return await ctx.respond(f"My Current Ping Is {round(ctx.app.heartbeat_latency * 1000)}ms")
 
-
+    
 
 def load(bot: SkyeBot) -> None:
     bot.add_plugin(hm)
+
+def unload(bot: SkyeBot):
+    bot.remove_plugin(hm)
