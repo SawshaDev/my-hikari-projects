@@ -1,7 +1,7 @@
 import os
 import crescent
 import hikari
-import config
+import config as config
 
 bot = crescent.Bot(config.token, intents=hikari.Intents.ALL)
 
