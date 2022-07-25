@@ -12,27 +12,34 @@ import aiohttp
 
 import hikari
 import lightbulb
-from bot import SkyeBot
+from bot import SawshaBot
 
 
 class Plugin(lightbulb.Plugin):
     @property
-    def bot(self) -> SkyeBot:
-        return t.cast(SkyeBot, self.app)
+    def bot(self) -> SawshaBot:
+        return t.cast(SawshaBot, self.app)
+
 
 
 class Context(lightbulb.Context):
-    @property
-    def bot(self) -> SkyeBot:
-        return t.cast(SkyeBot, self.app)
+    def __init__(self):
+        setattr(self, 'session', aiohttp.ClientSession())
 
     @property
-    def session(self) -> aiohttp.ClientSession:
-        return t.cast(self.bot.session, self.session)
+    def bot(self) -> SawshaBot:
+        return t.cast(SawshaBot, self.app)
+
+    @property
+    def app(self) -> SawshaBot:
+        return t.cast(SawshaBot, self.app)
+
 
 class SlashContext(Context, lightbulb.SlashContext):
     ...
 
+class PrefixContext(Context, lightbulb.PrefixContext):
+    ...
 
 def date(target, clock: bool = True, seconds: bool = False, ago: bool = False, only_ago: bool = False, raw: bool = False):
     if isinstance(target, int) or isinstance(target, float):

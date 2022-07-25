@@ -3,11 +3,13 @@ import lightbulb
 import aiohttp
 import asyncpg
 from config import token
+import asyncpg
 
 
-class SkyeBot(lightbulb.BotApp):
+class SawshaBot(lightbulb.BotApp):
     def __init__(self) -> None:
         super().__init__(
+            prefix="s",
             token=token,
             intents=hikari.Intents.ALL,
         )

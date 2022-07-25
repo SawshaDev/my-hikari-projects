@@ -2,8 +2,9 @@ from io import BytesIO
 from typing import Union
 import hikari
 import lightbulb
-from bot import SkyeBot
+from bot import SawshaBot
 import utils
+import miru
 
 hm = utils.Plugin("hm")
 
@@ -12,18 +13,10 @@ hm = utils.Plugin("hm")
 @lightbulb.command("userinfo", "Gets Info About A User", pass_options=True)
 @lightbulb.implements(lightbulb.SlashCommand)
 async def userinfo(ctx: utils.SlashContext, user: hikari.Member) -> None:
-    embed = hikari.Embed(description=f"Info About {user.mention}")
-    embed.set_author(name=f"{user}", icon=user.avatar_url)
+    user = user or ctx.member
 
-    show_roles = ", ".join(
-            [f"<@&{x.id}>" for x in sorted(user.get_roles(), key=lambda x: x.position, reverse=True)]
-    ) if len(user.get_roles()) > 1 else "No Roles"
-    
-
-    embed.add_field(name=f"Creation Date",value=utils.date(user.created_at, ago=True), inline=True)
-    embed.add_field(name="Roles", value=show_roles, inline=True)
-
-    await ctx.respond(embed)
+    info = f"Username: {user.username}\nDiscriminator: {user.discriminator}\nCreation Date: {utils.date(user.created_at, ago=True)}\nAccount ID: {user.id}"
+    await ctx.respond(info)
     
 @hm.command()
 @lightbulb.command("ping", "Gets The Bots Ping")
@@ -31,10 +24,23 @@ async def userinfo(ctx: utils.SlashContext, user: hikari.Member) -> None:
 async def ping(ctx: utils.SlashContext):
     return await ctx.respond(f"My Current Ping Is {round(ctx.app.heartbeat_latency * 1000)}ms")
 
+@hm.command()
+@lightbulb.command("test_group", "description")
+@lightbulb.implements(lightbulb.SlashCommandGroup)
+async def foo(ctx: utils.SlashContext) -> None:
+    pass
+
+
+
+@foo.child
+@lightbulb.command("bar", "test subcommand")
+@lightbulb.implements(lightbulb.SlashSubCommand)
+async def bar(ctx:utils.SlashContext) -> None:
+    await ctx.respond("invoked foo bar")  
     
 
-def load(bot: SkyeBot) -> None:
+def load(bot: SawshaBot) -> None:
     bot.add_plugin(hm)
 
-def unload(bot: SkyeBot):
+def unload(bot: SawshaBot):
     bot.remove_plugin(hm)
