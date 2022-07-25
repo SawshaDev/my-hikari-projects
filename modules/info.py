@@ -3,7 +3,7 @@ from typing import Union
 import hikari
 import lightbulb
 from bot import SawshaBot
-import utils.utils
+import utils
 import miru
 
 hm = utils.Plugin("hm")
