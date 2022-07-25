@@ -2,3 +2,4 @@ hikari-lightbulb
 hikari-miru
 asyncpg
 timeago
+python-dotenv

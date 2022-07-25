@@ -2,15 +2,17 @@ import hikari
 import lightbulb
 import aiohttp
 import asyncpg
-from config import token
+import os
 import asyncpg
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class SawshaBot(lightbulb.BotApp):
     def __init__(self) -> None:
         super().__init__(
             prefix="s",
-            token=token,
+            token=os.environ['TOKEN'],
             intents=hikari.Intents.ALL,
         )
         self.subscribe(hikari.StartingEvent, self.on_starting)
